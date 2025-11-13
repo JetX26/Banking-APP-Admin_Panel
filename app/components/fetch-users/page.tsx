@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+'use client'
 import React from 'react'
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
@@ -12,7 +13,7 @@ const FetchAllUsers = () => {
         return response.data.data;
     }
 
-    const { data, isLoading, isFetched, error, refetch, isSuccess } = useQuery({
+    const { data, isLoading, error, refetch, isSuccess } = useQuery({
         queryKey: ['fetchAllUsers'],
         queryFn: fetchAllUsers,
         enabled: false
