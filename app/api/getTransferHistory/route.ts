@@ -27,6 +27,11 @@ export async function GET(req: NextRequest) {
                             include: {
                                 toAccount: true
                             }
+                        },
+                        customer: {
+                            select: {
+                                email: true
+                            }
                         }
                     },
                 },
@@ -37,6 +42,7 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ success: true, user }, { status: 200 })
 
     } catch (error) {
+        console.error(error)
         return NextResponse.json({ error: 'Failed to fetch transfer history' }, { status: 400 })
     }
 }

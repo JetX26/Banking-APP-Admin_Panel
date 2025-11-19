@@ -13,7 +13,7 @@ export function middleware(req: NextRequest) {
         return NextResponse.redirect(new URL('/components/login', req.url))
     }
 
-    if (session && pathname === '/components/login') {
+    if (session && pathname === '/components/login' || session && pathname === '/') {
         return NextResponse.redirect(new URL('/components/dashboard', req.url))
     }
 
@@ -23,5 +23,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/components/:path*']
+    matcher: ['/', '/components/:path*']
 }

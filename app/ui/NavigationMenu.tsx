@@ -4,14 +4,13 @@ import Image from 'next/image'
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
-import CreateAccount from "../components/create-account/page";
 import GetBalance from "../components/get-balance/page";
 import FetchTransferHistory from "../components/fetch-transfers/page";
 import FetchAllUsers from "../components/fetch-users/page";
 import FetchUser from "../components/fetch-user/page";
 import TransferFunds from '../components/TransferFunds';
 
-import userIcon from "../../public/assets/icons/user.png"
+
 import walletIcon from "../../public/assets/icons/wallet.png"
 import transferIcon from "../../public/assets/icons/transfer.png"
 import allUsers from "../../public/assets/icons/all-users.png"
@@ -43,7 +42,7 @@ export const menuIcons = [
 const NavigationMenu = ({ activeItem, setActiveItem }: NavigationMenuProps) => {
 
     const router = useRouter()
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const [showNavByDefault, setShowNavByDefault] = useState(true)
 
     const logoutButton = async () => {
         const response = await axios.post('/api/logoutSession')
@@ -51,7 +50,6 @@ const NavigationMenu = ({ activeItem, setActiveItem }: NavigationMenuProps) => {
         console.log(response.status)
 
         if (response.status === 200) {
-            alert('Logging out ...')
             router.push('/')
         }
 
@@ -64,92 +62,110 @@ const NavigationMenu = ({ activeItem, setActiveItem }: NavigationMenuProps) => {
 
     return (
         <div className='flex flex-col lg:flex-row h-screen bg-white'>
-            {/* Desktop Navigation */}
-            <div className='hidden lg:flex border-r-[1px] border-gray-100 flex-col items-center justify-start h-screen py-4 gap-6 w-64'>
-                <div className='flex flex-col gap-2 w-full px-4'>
+            <div className='hidden lg:flex border-r border-gray-200 flex-col justify-start h-screen py-6 w-64 bg-white'>
+                <div className='px-6 py-4 mb-6'>
+                    <h2 className='text-4xl font-semibold text-gray-900'>Dashboard</h2>
+                </div>
+
+                <nav className='flex flex-col gap-2 px-4 flex-1'>
                     {menuIcons.map((item, id) => {
                         return (
-                            <span
+                            <button
                                 onClick={() => {
                                     setActiveItem(item.name)
                                 }}
                                 key={id}
-                                className={`flex gap-2 px-4 py-3 rounded-sm hover:bg-blue-200 cursor-pointer transition-colors ${activeItem === item.name && 'bg-blue-400 text-white'
+                                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${activeItem === item.name
+                                    ? 'bg-blue-600 text-white shadow-md'
+                                    : 'text-gray-700 hover:bg-gray-100'
                                     }`}
                             >
-                                <Image src={item.icon} width={25} alt={item.name} />
-                                <button className='text-sm font-medium'>{item.name}</button>
-                            </span>
+                                <Image src={item.icon} width={20} height={20} alt={item.name} />
+                                <span className='text-base font-medium truncate'>{item.name}</span>
+                            </button>
                         )
                     })}
-                </div>
+                </nav>
 
-                <div className='mt-auto w-full px-4'>
+                <div className='px-4 mt-auto'>
                     <button
                         onClick={() => { logoutButton() }}
-                        className='w-full px-4 py-2 bg-blue-400 hover:bg-blue-500 text-white rounded-sm font-medium transition-colors'
+                        className='w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors'
                     >
                         Logout
                     </button>
                 </div>
             </div>
 
-            {/* Mobile Navigation */}
-            <div className='lg:hidden flex flex-col w-full h-full'>
-                {/* Mobile Header */}
-                <div className='flex items-center justify-between border-b-[1px] border-gray-100 px-4 py-4 bg-white sticky top-0'>
-                    <h1 className='text-lg font-semibold text-gray-800'>{activeItem}</h1>
-                    <button
-                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        className='text-2xl font-bold text-gray-800'
-                    >
-                        ☰
-                    </button>
-                </div>
 
-                {/* Mobile Menu Dropdown */}
-                {mobileMenuOpen && (
-                    <div className='bg-white border-b-[1px] border-gray-100 p-4 flex flex-col gap-2'>
-                        {menuIcons.map((item, id) => {
-                            return (
-                                <span
-                                    onClick={() => {
-                                        setActiveItem(item.name)
-                                        setMobileMenuOpen(false)
-                                    }}
-                                    key={id}
-                                    className={`flex gap-2 px-4 py-3 rounded-sm hover:bg-blue-200 cursor-pointer transition-colors ${activeItem === item.name && 'bg-blue-400 text-white'
-                                        }`}
-                                >
-                                    <Image src={item.icon} width={25} alt={item.name} />
-                                    <button className='text-sm font-medium'>{item.name}</button>
-                                </span>
-                            )
-                        })}
+            <div className='lg:hidden flex flex-col w-full h-screen overflow-hidden'>
 
+                {!showNavByDefault && (
+                    <div className='flex items-center justify-between border-b border-gray-200 px-4 py-4 bg-white sticky top-0 z-50 animate-in slide-in-from-top duration-300 gap-3'>
                         <button
-                            onClick={() => { logoutButton() }}
-                            className='w-full px-4 py-2 bg-blue-400 hover:bg-blue-500 text-white rounded-sm font-medium mt-2 transition-colors'
+                            onClick={() => setShowNavByDefault(true)}
+                            className='p-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all active:scale-95 flex-shrink-0'
                         >
-                            Logout
+                            <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M15 19l-7-7 7-7' />
+                            </svg>
                         </button>
+                        <h1 className='text-xl font-semibold text-gray-900 flex-1 min-w-0 line-clamp-2'>{activeItem}</h1>
                     </div>
                 )}
 
-                {/* Mobile Content Area */}
-                <div className='flex-1 overflow-y-auto w-full'>
-                    {components.map((item, id) => {
-                        if (item.name === activeItem) {
-                            const Component = item.component;
-                            return <div key={id}>
-                                <Component></Component>
-                            </div>
-                        }
-                    })}
-                </div>
+
+                {!showNavByDefault && (
+                    <div className='flex-1 overflow-y-auto w-full animate-in fade-in duration-500'>
+                        {components.map((item, id) => {
+                            if (item.name === activeItem) {
+                                const Component = item.component;
+                                return <div key={id} className='w-full'>
+                                    <Component></Component>
+                                </div>
+                            }
+                        })}
+                    </div>
+                )}
+
+
+                {showNavByDefault && (
+                    <div className='flex flex-col h-full bg-white animate-in fade-in duration-500'>
+                        <div className='px-6 py-6 mb-6 mt-4'>
+                            <h2 className='text-3xl font-bold text-gray-900'>Dashboard</h2>
+                        </div>
+
+                        <nav className='flex flex-col gap-2 px-4 flex-1 overflow-y-auto'>
+                            {menuIcons.map((item, id) => {
+                                return (
+                                    <button
+                                        onClick={() => {
+                                            setActiveItem(item.name)
+                                            setShowNavByDefault(false)
+                                        }}
+                                        key={id}
+                                        className='flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-all active:scale-95 animate-in slide-in-from-bottom duration-300'
+                                        style={{ animationDelay: `${id * 50}ms` }}
+                                    >
+                                        <Image src={item.icon} width={20} height={20} alt={item.name} />
+                                        <span className='text-base font-medium truncate'>{item.name}</span>
+                                    </button>
+                                )
+                            })}
+                        </nav>
+
+                        <div className='px-4 py-6 border-t border-gray-200'>
+                            <button
+                                onClick={() => { logoutButton() }}
+                                className='w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors'
+                            >
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
 
-            {/* Desktop Content Area */}
             <div className='hidden lg:flex flex-1 overflow-y-auto'>
                 {components.map((item, id) => {
                     if (item.name === activeItem) {

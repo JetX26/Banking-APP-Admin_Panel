@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import WelcomePage from './components/WelcomePage'
+import Login from './components/login/page'
 
 
 const Home = () => {
@@ -8,7 +8,7 @@ const Home = () => {
 
   return (
     <main className='w-screen h-screen flex justify-center items-center'>
-      <WelcomePage></WelcomePage>
+      <Login></Login>
     </main>
   )
 }

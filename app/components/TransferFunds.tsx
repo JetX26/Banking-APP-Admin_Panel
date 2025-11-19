@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { FormEvent, useState } from 'react'
+'use client'
+import React, { useState } from 'react'
 import axios from 'axios'
-import { useQuery, useMutation } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 
 const TransferFunds = () => {
 
@@ -21,19 +22,23 @@ const TransferFunds = () => {
         e.preventDefault()
 
         if (!fromAccValue || !toAccValue || !amount) {
+            alert('Please fill in all fields')
             return;
         }
 
         try {
 
             const result = await mutateAsync({
-                fromAccountNumber: fromAccValue,
-                toAccountNumber: toAccValue,
+                senderEmail: fromAccValue,
+                receiverEmail: toAccValue,
                 amount
             })
 
             if (result) {
                 alert('Transfer complete!')
+                setFromAccValue('')
+                setToAccValue('')
+                setAmount(0)
             }
 
         } catch (error: any) {
@@ -43,18 +48,19 @@ const TransferFunds = () => {
     }
 
     return (
-        <form onSubmit={submit} className="bg-white rounded-sm p-12 flex flex-col items-center gap-4 px-4 py-8 sm:px-6 md:p-12">
-            <h1 className='text-2xl font-semibold'>Transfer Funds</h1>
+        <div className="bg-white w-full flex flex-col items-center gap-6 px-4 py-8 sm:px-6 md:p-12">
+            <h1 className='text-2xl sm:text-3xl md:text-3xl font-semibold text-gray-900'>Transfer Funds</h1>
 
-            <div className='flex flex-col items-center gap-3'>
+            <form onSubmit={submit} className='w-full max-w-md flex flex-col items-center gap-4'>
                 <input
                     onChange={(e) => {
                         setFromAccValue(e.currentTarget.value)
                         console.log(fromAccValue)
                     }}
-                    className='rounded-sm border-[1px] border-gray-200 px-3 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-400'
-                    type="text"
-                    placeholder='From account number'
+                    className='w-full rounded-lg border border-gray-300 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all'
+                    type="email"
+                    placeholder='Sender Email'
+                    required
                 />
 
                 <input
@@ -62,9 +68,10 @@ const TransferFunds = () => {
                         setToAccValue(e.currentTarget.value)
                         console.log(toAccValue)
                     }}
-                    className='rounded-sm border-[1px] border-gray-200 px-3 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-400'
-                    type="text"
-                    placeholder='To account number'
+                    className='w-full rounded-lg border border-gray-300 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all'
+                    type="email"
+                    placeholder='Receiver Email'
+                    required
                 />
 
                 <input
@@ -73,19 +80,20 @@ const TransferFunds = () => {
                         console.log(amount)
                     }}
                     placeholder='Amount'
-                    type="text"
-                    className='rounded-sm border-[1px] border-gray-200 px-3 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-400'
+                    type="number"
+                    className='w-full rounded-lg border border-gray-300 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all'
+                    required
                 />
 
                 <button
                     type='submit'
                     onClick={() => console.log(data)}
-                    className='rounded-sm bg-blue-400 text-white px-[2rem] py-1 hover:bg-blue-500 transition-colors'
+                    className='w-full rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 text-base transition-colors active:scale-95'
                 >
                     Transfer
                 </button>
-            </div>
-        </form>
+            </form>
+        </div>
     )
 }
 
