@@ -67,15 +67,15 @@ const Login = () => {
 
     return (
         <form onSubmit={submit} className='bg-white w-full min-h-screen flex items-center justify-center px-4 py-8 sm:px-6'>
-            <div className='w-full max-w-md flex flex-col justify-center items-center gap-4 sm:gap-5'>
-                <h3 className='text-2xl sm:text-3xl md:text-3xl font-semibold text-center'>Sign in</h3>
+            <div className='w-full max-w-md flex flex-col justify-center items-center gap-6 sm:gap-6'>
+                <h3 className='text-2xl sm:text-3xl md:text-3xl font-semibold text-center text-gray-900'>Sign in</h3>
 
                 <input
                     onChange={(e) => {
                         setEmail(e.currentTarget.value)
                     }}
-                    className='w-full border-[1px] border-gray-200 text-black rounded-sm px-3 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-400'
-                    type="text"
+                    className='w-full border border-gray-300 text-gray-900 rounded-lg px-4 py-3 text-base placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all appearance-none'
+                    type="email"
                     placeholder='Email'
                 />
 
@@ -83,22 +83,22 @@ const Login = () => {
                     onChange={(e) => {
                         setPassword(e.currentTarget.value)
                     }}
-                    className='w-full border-[1px] border-gray-200 text-black rounded-sm px-3 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-400'
+                    className='w-full border border-gray-300 text-gray-900 rounded-lg px-4 py-3 text-base placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all appearance-none'
                     type="password"
                     placeholder='Password'
                 />
 
                 <button
                     type='submit'
-                    className='w-full rounded-sm bg-blue-400 hover:bg-blue-500 text-white font-medium px-4 py-2 text-sm sm:text-base transition-colors'
+                    className='w-full rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-3 text-base transition-colors active:scale-95'
                 >
                     Login
                 </button>
 
                 <div className='text-center'>
-                    <p className='text-sm sm:text-base mb-2'>{`Don't have an account?`}</p>
+                    <p className='text-base text-gray-900 mb-3'>{`Don't have an account?`}</p>
                     <a
-                        className='text-blue-400 hover:text-blue-500 hover:underline text-sm sm:text-base font-medium transition-colors'
+                        className='text-blue-600 hover:text-blue-700 hover:underline text-base font-medium transition-colors'
                         href='/components/create-account'
                     >
                         Create An Account
