@@ -57,7 +57,7 @@ const TransferFunds = () => {
                         setFromAccValue(e.currentTarget.value)
                         console.log(fromAccValue)
                     }}
-                    className='w-full rounded-lg border border-gray-300 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all'
+                    className='w-full rounded-lg border border-gray-300 text-black px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all'
                     type="email"
                     placeholder='Sender Email'
                     required
@@ -68,7 +68,7 @@ const TransferFunds = () => {
                         setToAccValue(e.currentTarget.value)
                         console.log(toAccValue)
                     }}
-                    className='w-full rounded-lg border border-gray-300 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all'
+                    className='w-full rounded-lg border border-gray-300 text-black px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all'
                     type="email"
                     placeholder='Receiver Email'
                     required
@@ -81,7 +81,7 @@ const TransferFunds = () => {
                     }}
                     placeholder='Amount'
                     type="number"
-                    className='w-full rounded-lg border border-gray-300 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all'
+                    className='w-full rounded-lg border border-gray-300 text-black px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all'
                     required
                 />
 

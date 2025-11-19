@@ -104,13 +104,13 @@ const CreateAccount = () => {
                                         value={amount}
                                         onChange={handleAmount}
                                         placeholder='$0.00'
-                                        className='w-full border-[1px] border-gray-200 rounded-sm px-2 py-2 text-sm sm:text-base focus:outline-none'
+                                        className='w-full border-[1px] border-gray-200 rounded-sm px-2 py-2 text-sm sm:text-base focus:outline-none text-black'
                                     />
                                 ) : (
                                     <input
                                         name={item}
                                         type='text'
-                                        className='w-full border-[1px] border-gray-200 rounded-sm px-2 py-2 text-sm sm:text-base focus:outline-none'
+                                        className='w-full text-black border-[1px] border-gray-200 rounded-sm px-2 py-2 text-sm sm:text-base focus:outline-none'
                                         placeholder={item}
                                     />
                                 )}
@@ -122,7 +122,7 @@ const CreateAccount = () => {
                         onChange={(e) => {
                             setAccountType(e.target.value)
                         }}
-                        className='w-full pr-4 pl-1 py-2 border-[1px] border-gray-200 rounded-sm text-sm sm:text-base focus:outline-none'
+                        className='w-full text-black pr-4 pl-1 py-2 border-[1px] border-gray-200 rounded-sm text-sm sm:text-base focus:outline-none'
                     >
                         {accountTypes.map((item, id) => {
                             return <option key={id}>{item}</option>

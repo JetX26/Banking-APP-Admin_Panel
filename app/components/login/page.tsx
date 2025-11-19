@@ -74,7 +74,7 @@ const Login = () => {
                     onChange={(e) => {
                         setEmail(e.currentTarget.value)
                     }}
-                    className='w-full border-[1px] border-gray-200 rounded-sm px-3 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-400'
+                    className='w-full border-[1px] border-gray-200 text-black rounded-sm px-3 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-400'
                     type="text"
                     placeholder='Email'
                 />
@@ -83,7 +83,7 @@ const Login = () => {
                     onChange={(e) => {
                         setPassword(e.currentTarget.value)
                     }}
-                    className='w-full border-[1px] border-gray-200 rounded-sm px-3 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-400'
+                    className='w-full border-[1px] border-gray-200 text-black rounded-sm px-3 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-400'
                     type="password"
                     placeholder='Password'
                 />

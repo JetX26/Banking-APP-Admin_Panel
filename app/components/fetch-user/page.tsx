@@ -46,7 +46,7 @@ const FetchUser = () => {
                         setUserData(e.currentTarget.value)
                         console.log(userData)
                     }}
-                    className='w-full rounded-lg border border-gray-300 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all'
+                    className='w-full rounded-lg border border-gray-300 text-black px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all'
                     required
                     placeholder='Email'
                 />
