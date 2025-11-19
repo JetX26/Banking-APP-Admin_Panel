@@ -13,6 +13,11 @@ npm run dev
 Once it starts, open your browser and go to:
 http://localhost:3000
 
+OR 
+
+You can visit the hosted webapp here: 
+banking-app-iota-two.vercel.app
+
 
 Test Login
 Use the following test account to sign in:
