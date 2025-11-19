@@ -93,7 +93,7 @@ const CreateAccount = () => {
                 onSubmit={submit}
                 className="w-full max-w-md bg-white rounded-lg p-6 sm:p-8 md:p-12 flex flex-col items-center gap-4">
 
-                <h1 className='text-xl sm:text-2xl md:text-2xl font-semibold text-center'>Create An Account</h1>
+                <h1 className='text-2xl sm:text-3xl md:text-3xl font-semibold text-center text-gray-900'>Create An Account</h1>
 
                 <div className='w-full flex flex-col items-center gap-3'>
                     {inputs.map((item, id) => {
@@ -104,13 +104,13 @@ const CreateAccount = () => {
                                         value={amount}
                                         onChange={handleAmount}
                                         placeholder='$0.00'
-                                        className='w-full border-[1px] border-gray-200 rounded-sm px-2 py-2 text-sm sm:text-base focus:outline-none'
+                                        className='w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all'
                                     />
                                 ) : (
                                     <input
                                         name={item}
                                         type='text'
-                                        className='w-full border-[1px] border-gray-200 rounded-sm px-2 py-2 text-sm sm:text-base focus:outline-none'
+                                        className='w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all'
                                         placeholder={item}
                                     />
                                 )}
@@ -122,7 +122,7 @@ const CreateAccount = () => {
                         onChange={(e) => {
                             setAccountType(e.target.value)
                         }}
-                        className='w-full pr-4 pl-1 py-2 border-[1px] border-gray-200 rounded-sm text-sm sm:text-base focus:outline-none'
+                        className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all'
                     >
                         {accountTypes.map((item, id) => {
                             return <option key={id}>{item}</option>
@@ -131,7 +131,7 @@ const CreateAccount = () => {
 
                     <button
                         type='submit'
-                        className='w-full rounded-sm bg-blue-400 hover:bg-blue-500 text-white font-medium px-4 py-2 sm:py-2 text-sm sm:text-base transition-colors'
+                        className='w-full rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-3 text-base transition-colors active:scale-95'
                     >
                         Create Account
                     </button>
@@ -139,12 +139,12 @@ const CreateAccount = () => {
             </form>
 
             <div className='w-full max-w-md flex flex-col justify-center items-center gap-3 mt-6 sm:mt-8'>
-                <p className='text-sm sm:text-base text-center'>Already have an account?</p>
+                <p className='text-base text-center'>Already have an account?</p>
                 <button
                     onClick={() => {
                         router.push('/components/login')
                     }}
-                    className='w-full rounded-sm bg-blue-400 hover:bg-blue-500 text-white font-medium px-4 py-2 text-sm sm:text-base transition-colors'
+                    className='w-full rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-3 text-base transition-colors active:scale-95'
                 >
                     Login
                 </button>
