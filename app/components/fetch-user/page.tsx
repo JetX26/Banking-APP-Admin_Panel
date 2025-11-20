@@ -65,8 +65,10 @@ const FetchUser = () => {
                 </button>
             </div>
 
-            <div className='w-full max-w-3xl'>
-                <h2 className='text-2xl sm:text-3xl font-semibold mb-4 text-center text-gray-900'>User Data</h2>
+            <div className='w-full max-w-3xl text-black'>
+                {isSuccess && (
+                    <h2 className='text-2xl sm:text-3xl font-semibold mb-4 text-center text-gray-900'>User Data</h2>
+                )}
 
                 {isLoading ? (
                     <div className='flex justify-center'>
