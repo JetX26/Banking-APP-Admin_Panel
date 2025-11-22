@@ -10,13 +10,11 @@ import FetchAllUsers from "../components/fetch-users/page";
 import FetchUser from "../components/fetch-user/page";
 import TransferFunds from '../components/TransferFunds';
 
-
 import walletIcon from "../../public/assets/icons/wallet.png"
 import transferIcon from "../../public/assets/icons/transfer.png"
 import allUsers from "../../public/assets/icons/all-users.png"
 import fetchUser from '../../public/assets/icons/fetch-user.png'
 import transferFunds from "../../public/assets/icons/transfer-funds.png"
-
 
 interface NavigationMenuProps {
     activeItem: string,
@@ -46,13 +44,7 @@ const NavigationMenu = ({ activeItem, setActiveItem }: NavigationMenuProps) => {
 
     const logoutButton = async () => {
         const response = await axios.post('/api/logoutSession')
-
-        console.log(response.status)
-
-        if (response.status === 200) {
-            router.push('/')
-        }
-
+        if (response.status === 200) router.push('/')
         return response;
     }
 
@@ -61,42 +53,60 @@ const NavigationMenu = ({ activeItem, setActiveItem }: NavigationMenuProps) => {
     }, [activeItem])
 
     return (
-        <div className='flex flex-col lg:flex-row h-screen bg-white'>
-            <div className='hidden lg:flex border-r border-gray-200 flex-col justify-start h-screen py-6 w-64 bg-white'>
-                <div className='px-6 py-4 mb-6'>
-                    <h2 className='text-4xl font-semibold text-gray-900'>Dashboard</h2>
+        <div className='flex flex-col h-screen bg-white'>
+
+            <div className='hidden lg:flex flex-col items-center justify-center flex-1 py-10'>
+
+                <div className='px-6 py-4 mb-10'>
+                    <h2 className='text-4xl font-semibold text-gray-900 text-center'>Dashboard</h2>
                 </div>
 
-                <nav className='flex flex-col gap-2 px-4 flex-1'>
-                    {menuIcons.map((item, id) => {
-                        return (
-                            <button
-                                onClick={() => {
-                                    setActiveItem(item.name)
-                                }}
-                                key={id}
-                                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${activeItem === item.name
-                                    ? 'bg-blue-600 text-white shadow-md'
-                                    : 'text-gray-700 hover:bg-gray-100'
-                                    }`}
-                            >
-                                <Image src={item.icon} width={20} height={20} alt={item.name} />
-                                <span className='text-base font-medium truncate'>{item.name}</span>
-                            </button>
-                        )
-                    })}
-                </nav>
+                <button onClick={() => {
+                    setActiveItem('')
+                }}>Back</button>
 
-                <div className='px-4 mt-auto'>
+                {!activeItem && (
+                    <nav className='grid grid-cols-2 gap-6 px-4'>
+                        {menuIcons.map((item, id) => {
+                            return (
+                                <button
+                                    onClick={() => setActiveItem(item.name)}
+                                    key={id}
+                                    className={`flex flex-col items-center justify-center gap-3 p-6 rounded-2xl shadow transition-all duration-200 ${activeItem === item.name
+                                        ? 'bg-blue-600 text-white shadow-lg scale-105'
+                                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                        }`}
+                                >
+                                    <Image src={item.icon} width={35} height={35} alt={item.name} />
+                                    <span className='text-base font-medium text-center'>{item.name}</span>
+                                </button>
+                            )
+                        })}
+                    </nav>
+                )}
+
+                <div className='px-4 mt-10'>
                     <button
                         onClick={() => { logoutButton() }}
-                        className='w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors'
+                        className='w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors'
                     >
                         Logout
                     </button>
                 </div>
             </div>
 
+            <div className='hidden lg:flex flex-1 overflow-y-auto p-8'>
+                {components.map((item, id) => {
+                    if (item.name === activeItem) {
+                        const Component = item.component;
+                        return (
+                            <div key={id} className='w-full'>
+                                <Component />
+                            </div>
+                        )
+                    }
+                })}
+            </div>
 
             <div className='lg:hidden flex flex-col w-full h-screen overflow-hidden'>
 
@@ -110,32 +120,32 @@ const NavigationMenu = ({ activeItem, setActiveItem }: NavigationMenuProps) => {
                                 <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M15 19l-7-7 7-7' />
                             </svg>
                         </button>
-                        <h1 className='text-xl font-semibold text-gray-900 flex-1 min-w-0 line-clamp-2'>{activeItem}</h1>
+                        <h1 className='text-xl font-semibold text-gray-900 flex-1 min-w-0 line-clamp-2 text-center'>{activeItem}</h1>
                     </div>
                 )}
-
 
                 {!showNavByDefault && (
                     <div className='flex-1 overflow-y-auto w-full animate-in fade-in duration-500'>
                         {components.map((item, id) => {
                             if (item.name === activeItem) {
                                 const Component = item.component;
-                                return <div key={id} className='w-full'>
-                                    <Component></Component>
-                                </div>
+                                return (
+                                    <div key={id} className='w-full'>
+                                        <Component />
+                                    </div>
+                                )
                             }
                         })}
                     </div>
                 )}
 
-
                 {showNavByDefault && (
                     <div className='flex flex-col h-full bg-white animate-in fade-in duration-500'>
                         <div className='px-6 py-6 mb-6 mt-4'>
-                            <h2 className='text-3xl font-bold text-gray-900'>Dashboard</h2>
+                            <h2 className='text-3xl font-bold text-gray-900 text-center'>Dashboard</h2>
                         </div>
 
-                        <nav className='flex flex-col gap-2 px-4 flex-1 overflow-y-auto'>
+                        <nav className='grid grid-cols-2 gap-4 px-4 flex-1 overflow-y-auto'>
                             {menuIcons.map((item, id) => {
                                 return (
                                     <button
@@ -144,11 +154,11 @@ const NavigationMenu = ({ activeItem, setActiveItem }: NavigationMenuProps) => {
                                             setShowNavByDefault(false)
                                         }}
                                         key={id}
-                                        className='flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-all active:scale-95 animate-in slide-in-from-bottom duration-300'
+                                        className='flex flex-col items-center p-6 rounded-2xl bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all active:scale-95 animate-in slide-in-from-bottom duration-300'
                                         style={{ animationDelay: `${id * 50}ms` }}
                                     >
-                                        <Image src={item.icon} width={20} height={20} alt={item.name} />
-                                        <span className='text-base font-medium truncate'>{item.name}</span>
+                                        <Image src={item.icon} width={35} height={35} alt={item.name} />
+                                        <span className='text-base font-medium text-center'>{item.name}</span>
                                     </button>
                                 )
                             })}
@@ -166,16 +176,6 @@ const NavigationMenu = ({ activeItem, setActiveItem }: NavigationMenuProps) => {
                 )}
             </div>
 
-            <div className='hidden lg:flex flex-1 overflow-y-auto'>
-                {components.map((item, id) => {
-                    if (item.name === activeItem) {
-                        const Component = item.component;
-                        return <div key={id} className='w-full'>
-                            <Component></Component>
-                        </div>
-                    }
-                })}
-            </div>
         </div>
     )
 }

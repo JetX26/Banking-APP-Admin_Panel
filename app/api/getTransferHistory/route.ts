@@ -1,5 +1,6 @@
 import prisma from "@/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import { success } from "zod";
 
 
 
@@ -37,6 +38,10 @@ export async function GET(req: NextRequest) {
                 },
             }
         })
+
+        if (!user) {
+            return NextResponse.json({ success: false, message: 'User not found' }, { status: 404 })
+        }
 
 
         return NextResponse.json({ success: true, user }, { status: 200 })

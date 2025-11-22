@@ -3,7 +3,7 @@
 'use client'
 import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 
 const FetchTransferHistory = () => {
 
@@ -23,7 +23,14 @@ const FetchTransferHistory = () => {
     const { data, isLoading, isSuccess, refetch, error } = useQuery({
         queryKey: ['fetchTransfers', emailInput],
         queryFn: () => fetchTransfers(emailInput),
-        enabled: false
+        enabled: false,
+        retry: (failures, error: AxiosError) => {
+            if (error.response?.status === 404) {
+                return false;
+            }
+
+            return failures < 3
+        }
     })
 
     return (
@@ -42,10 +49,7 @@ const FetchTransferHistory = () => {
 
                 <button
                     onClick={() => {
-
-                        if (!data) {
-                            return;
-                        }
+                        console.log('Submit clicked')
 
                         if (!emailInput) {
                             alert('Please enter a valid email')
@@ -66,7 +70,7 @@ const FetchTransferHistory = () => {
 
 
                 {error && (
-                    <p>User not found...</p>
+                    <p>User not found</p>
                 )}
 
 
