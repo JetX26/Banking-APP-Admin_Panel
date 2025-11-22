@@ -22,4 +22,4 @@ banking-app-iota-two.vercel.app
 Test Login
 Use the following test account to sign in:
 Email: admin@live.com
-Password: admin
+Password: mypass
