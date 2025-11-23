@@ -2,11 +2,9 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-<<<<<<< HEAD
+
 import { Wallet, ArrowRightLeft, Users, User, Send, PlusCircle, Menu } from 'lucide-react'
-=======
-import { Wallet, ArrowRightLeft, Users, User, Send, PlusCircle, Menu, X } from 'lucide-react'
->>>>>>> 76af58b99c9dc8b095cb7d007d5e3c2c1f510c73
+
 
 import GetBalance from "../components/get-balance/page";
 import FetchTransferHistory from "../components/fetch-transfers/page";
