@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
 
 
     } catch (error) {
-
+        console.error(error)
         return NextResponse.json({ error: 'Failed to fetch user' }, { status: 400 })
     }
 }

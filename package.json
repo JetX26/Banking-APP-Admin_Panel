@@ -4,23 +4,22 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "prisma generate && next build --turbopack",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
-    "@prisma/client": "^6.16.2",
     "@tanstack/react-query": "^5.90.3",
     "axios": "^1.12.2",
     "bcrypt": "^6.0.0",
     "lucide-react": "^0.554.0",
     "next": "15.5.3",
-    "prisma": "^6.16.1",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@prisma/client": "^6.12.0",
     "@tailwindcss/postcss": "^4",
     "@types/bcrypt": "^6.0.0",
     "@types/node": "^20",
@@ -28,6 +27,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.5.3",
+    "prisma": "^6.12.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

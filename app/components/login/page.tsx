@@ -66,7 +66,7 @@ const Login = () => {
     }
 
     return (
-        <form onSubmit={submit} className='bg-white w-full min-h-screen flex items-center justify-center px-4 py-8 sm:px-6'>
+        <form onSubmit={submit} className='w-full bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 min-h-screen flex items-center justify-center px-4 py-8 sm:px-6'>
             <div className='w-full max-w-md flex flex-col justify-center items-center gap-6 sm:gap-6'>
                 <h3 className='text-2xl sm:text-3xl md:text-3xl font-semibold text-center text-gray-900'>Sign in</h3>
 
