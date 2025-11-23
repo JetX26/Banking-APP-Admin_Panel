@@ -88,14 +88,17 @@ const CreateAccount = () => {
     }
 
     return (
-        <div className='min-h-screen bg-white flex flex-col justify-center items-center px-4 py-8 sm:px-6 md:px-8'>
+        <div className='min-h-screen flex flex-col items-center px-4 py-8 sm:px-6 md:px-8'>
             <form
                 onSubmit={submit}
-                className="w-full max-w-md bg-white rounded-lg p-6 sm:p-8 md:p-12 flex flex-col items-center gap-4">
+                className="w-full max-w-md rounded-2xl p-6 sm:p-8 md:p-10 flex flex-col items-center gap-6 shadow-xl border border-gray-100">
 
-                <h1 className='text-xl sm:text-2xl md:text-2xl font-semibold text-center'>Create An Account</h1>
+                <div className='text-center'>
+                    <h1 className='text-2xl sm:text-3xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent'>Create Account</h1>
 
-                <div className='w-full flex flex-col items-center gap-3'>
+                </div>
+
+                <div className='w-full flex flex-col items-center gap-4'>
                     {inputs.map((item, id) => {
                         return (
                             <div key={id} className='w-full'>
@@ -104,13 +107,13 @@ const CreateAccount = () => {
                                         value={amount}
                                         onChange={handleAmount}
                                         placeholder='$0.00'
-                                        className='w-full border-[1px] border-gray-200 rounded-sm px-2 py-2 text-sm sm:text-base focus:outline-none text-black'
+                                        className='w-full border-2 border-gray-200 rounded-lg px-4 py-3 text-sm sm:text-base focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-gray-900 transition-all bg-gray-50 hover:bg-white'
                                     />
                                 ) : (
                                     <input
                                         name={item}
-                                        type='text'
-                                        className='w-full text-black border-[1px] border-gray-200 rounded-sm px-2 py-2 text-sm sm:text-base focus:outline-none'
+                                        type={item === 'Password' ? 'password' : 'text'}
+                                        className='w-full text-gray-900 border-2 border-gray-200 rounded-lg px-4 py-3 text-sm sm:text-base focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all bg-gray-50 hover:bg-white'
                                         placeholder={item}
                                     />
                                 )}
@@ -122,7 +125,7 @@ const CreateAccount = () => {
                         onChange={(e) => {
                             setAccountType(e.target.value)
                         }}
-                        className='w-full text-black pr-4 pl-1 py-2 border-[1px] border-gray-200 rounded-sm text-sm sm:text-base focus:outline-none'
+                        className='w-full text-gray-900 px-4 py-3 border-2 border-gray-200 rounded-lg text-sm sm:text-base focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all bg-gray-50 hover:bg-white cursor-pointer'
                     >
                         {accountTypes.map((item, id) => {
                             return <option key={id}>{item}</option>
@@ -131,24 +134,12 @@ const CreateAccount = () => {
 
                     <button
                         type='submit'
-                        className='w-full rounded-sm bg-blue-400 hover:bg-blue-500 text-white font-medium px-4 py-2 sm:py-2 text-sm sm:text-base transition-colors'
+                        className='w-full rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold px-4 py-3 sm:py-3 text-sm sm:text-base transition-all shadow-lg hover:shadow-xl active:scale-95 transform'
                     >
                         Create Account
                     </button>
                 </div>
             </form>
-
-            <div className='w-full max-w-md flex flex-col justify-center items-center gap-3 mt-6 sm:mt-8'>
-                <p className='text-sm sm:text-base text-center text-black'>Already have an account?</p>
-                <button
-                    onClick={() => {
-                        router.push('/components/login')
-                    }}
-                    className='w-full rounded-sm bg-blue-400 hover:bg-blue-500 text-white font-medium px-4 py-2 text-sm sm:text-base transition-colors'
-                >
-                    Login
-                </button>
-            </div>
         </div>
     )
 }

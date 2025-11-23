@@ -16,7 +16,7 @@ const WelcomePage = () => {
     }
 
     return (
-        <div className='w-full h-screen bg-white flex items-center justify-center px-4 py-8'>
+        <div className='w-full h-screen  flex items-center justify-center px-4 py-8'>
             <div className='flex flex-col gap-4 sm:gap-5 text-center max-w-sm'>
                 <h1 className='text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800'>Welcome!</h1>
 

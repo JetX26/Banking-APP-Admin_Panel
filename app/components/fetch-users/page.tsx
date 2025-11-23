@@ -3,6 +3,7 @@
 import React from 'react'
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
+import { Users, Loader } from 'lucide-react'
 
 const FetchAllUsers = () => {
 
@@ -20,57 +21,125 @@ const FetchAllUsers = () => {
     })
 
     return (
-        <div className="bg-white w-full flex flex-col items-center gap-6 px-4 py-8 sm:px-6 md:p-12">
-            <h1 className='text-2xl sm:text-3xl md:text-3xl font-semibold text-gray-900'>Fetch All Users</h1>
+        <div className=" flex flex-col items-center gap-4 p-5">
 
-            <div className='w-full max-w-md flex flex-col items-center gap-3'>
+
+            <div className={`flex items-center flex-shrink-0 transition-all duration-500 ${isSuccess ? 'justify-start' : 'justify-center'}`}>
                 <button
                     onClick={async () => {
                         await refetch()
                     }}
-                    className='w-full rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-3 text-base transition-colors active:scale-95'
+                    disabled={isLoading}
+                    className={`rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-blue-400 disabled:to-indigo-400 text-white font-semibold transition-all shadow-md hover:shadow-lg active:scale-95 flex items-center gap-2 flex-shrink-0 duration-500 ${isSuccess ? 'absolute top-5 right-5 px-5 py-1.5 text-xs' : 'px-6 py-2 text-sm'
+                        }`}
                 >
-                    Fetch
+                    {isLoading ? (
+                        <>
+                            <Loader className='w-4 h-4 animate-spin' />
+                            <span>Loading...</span>
+                        </>
+                    ) : (
+                        'Fetch'
+                    )}
                 </button>
             </div>
 
-            <div className='w-full max-w-3xl'>
-                {isLoading && (
-                    <div className='flex justify-center'>
-                        <p className='text-base text-gray-600'>Loading...</p>
+
+            {isSuccess && (
+                <div className='animate-in fade-in slide-in-from-left duration-700 gap-8 flex justify-between'>
+
+                    <div>
+                        <h1 className='text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent'>All Users</h1>
+                        {data && isSuccess && (<p className='text-gray-500 text-xs mt-0.5'>{data?.length} registered users </p>)}
                     </div>
-                )}
+                    <button>Refetch</button>
+                </div>
+            )}
 
-                {data && isSuccess && (
-                    <div className='bg-gray-50 rounded-lg p-6 space-y-3 overflow-y-auto max-h-[70vh] border border-gray-200'>
-                        {data.map((item: any, id: any) => (
-                            <div key={id} className='bg-white p-5 rounded-lg border border-gray-200 hover:shadow-md transition-shadow'>
-                                <p className='text-base font-semibold mb-4 text-gray-900'>
-                                    {item.firstName} {item.lastName}
-                                </p>
 
-                                {item.accounts && item.accounts.length > 0 ? (
-                                    <div className='space-y-2 ml-4'>
-                                        {item.accounts.map((account: any, accountId: any) => (
-                                            <p key={accountId} className='text-sm text-gray-700'>
-                                                <strong>Account:</strong> {account.accountNumber}
-                                            </p>
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <p className='text-sm text-gray-500'>No accounts</p>
-                                )}
+            {isSuccess && (
+                <div className='flex-1 min-h-0 w-1/4 bg-gradient-to-br from-white to-gray-50 rounded-xl border border-gray-100 shadow-sm overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-700' style={{ animationDelay: '100ms' }}>
+                    {data && data.length > 0 ? (
+                        <div className='w-full h-full flex flex-col overflow-hidden'>
+
+
+                            <div className='flex justify-between gap-3 px-5 py-3 bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 flex-shrink-0'>
+                                <div className='col-span-5'>
+                                    <p className='text-xs font-semibold text-gray-700 uppercase tracking-wide'>First Name</p>
+                                </div>
+                                <div className='col-span-4'>
+                                    <p className='text-xs font-semibold text-gray-700 uppercase tracking-wide'>Last Name</p>
+                                </div>
+                                <div className='col-span-3'>
+                                    <p className='text-xs font-semibold text-gray-700 uppercase tracking-wide'>Accounts</p>
+                                </div>
                             </div>
-                        ))}
-                    </div>
-                )}
 
-                {error && (
-                    <div className='flex justify-center'>
-                        <p className='text-base text-red-600'>Error loading users</p>
+
+                            <div className='flex-1 overflow-y-auto bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100'>
+                                {data.map((item: any, id: any) => (
+                                    <div
+                                        key={id}
+                                        className='flex justify-between gap-3 px-5 py-2.5 border-b border-gray-100 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-colors items-center animate-in fade-in slide-in-from-left duration-300'
+                                        style={{ animationDelay: `${200 + id * 30}ms` }}
+                                    >
+                                        <div className='col-span-5'>
+                                            <p className='text-sm font-medium text-gray-900'>
+                                                {item.firstName}
+                                            </p>
+                                        </div>
+                                        <div className='col-span-4'>
+                                            <p className='text-sm font-medium text-gray-900'>
+                                                {item.lastName}
+                                            </p>
+                                        </div>
+                                        <div className='col-span-3 flex flex-wrap gap-1.5'>
+                                            {item.accounts && item.accounts.length > 0 ? (
+                                                item.accounts.map((account: any, accountId: any) => (
+                                                    <span key={accountId} className='text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-mono font-semibold whitespace-nowrap'>
+                                                        ...{account.accountNumber.slice(-4)}
+                                                    </span>
+                                                ))
+                                            ) : (
+                                                <span className='text-xs text-gray-400 italic'>—</span>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ) : (
+                        <div className='w-full h-full flex items-center justify-center animate-in fade-in duration-500'>
+                            <div className='flex flex-col items-center gap-3 text-center'>
+                                <Users className='w-12 h-12 text-gray-300' strokeWidth={1.5} />
+                                <div>
+                                    <p className='text-sm font-semibold text-gray-700'>No users found</p>
+                                    <p className='text-xs text-gray-500 mt-1'>Check back later</p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            )}
+
+
+            {error && (
+                <div className='flex-1 min-h-0 w-1/4 bg-white rounded-xl border border-red-100 shadow-sm overflow-hidden flex items-center justify-center animate-in fade-in duration-500'>
+                    <div className='flex flex-col items-center gap-3 text-center'>
+                        <div className='w-12 h-12 rounded-full bg-red-100 flex items-center justify-center'>
+                            <svg className='w-6 h-6 text-red-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
+                            </svg>
+                        </div>
+                        <div>
+                            <p className='text-sm font-semibold text-red-700'>Failed to load users</p>
+                            <p className='text-xs text-red-600 mt-1'>Try clicking Fetch again</p>
+                        </div>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
+
+
         </div>
     )
 }

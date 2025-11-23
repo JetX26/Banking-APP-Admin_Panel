@@ -32,7 +32,7 @@ const GetBalance = () => {
     }, [accountNumberInput])
 
     return (
-        <div className="bg-white w-full flex flex-col items-center gap-6 px-4 py-8 sm:px-6 md:p-12">
+        <div className="w-full flex flex-col items-center gap-6 px-4 py-8 sm:px-6 md:p-12">
             <h1 className='text-2xl sm:text-3xl md:text-3xl font-semibold text-gray-900'>Get Balance</h1>
 
             <div className='w-full max-w-md flex flex-col items-center gap-3'>
