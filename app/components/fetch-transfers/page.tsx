@@ -37,7 +37,7 @@ const FetchTransferHistory = () => {
         <div className="min-h-screen flex flex-col items-center px-4 py-8 sm:px-6 md:px-8">
             <div className='w-full max-w-md rounded-2xl p-6 sm:p-8 md:p-10 flex flex-col items-center gap-6 shadow-xl border border-gray-100'>
                 <div className='text-center'>
-                    <h1 className='text-2xl sm:text-3xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent'>Fetch Transfers</h1>
+                    <h1 className='text-2xl sm:text-3xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent'>Fetch Transfers</h1>
                 </div>
 
                 <div className='w-full flex flex-col items-center gap-4'>
@@ -61,7 +61,7 @@ const FetchTransferHistory = () => {
                                 return;
                             }
                         }}
-                        className='w-full rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold px-4 py-3 sm:py-3 text-sm sm:text-base transition-all shadow-lg hover:shadow-xl active:scale-95 transform'
+                        className='w-full rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-4 py-3 sm:py-3 text-sm sm:text-base transition-all shadow-lg hover:shadow-xl active:scale-95 transform'
                     >
                         Submit
                     </button>

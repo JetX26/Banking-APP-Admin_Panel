@@ -48,7 +48,7 @@ const TransferFunds = () => {
     }
 
     return (
-        <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex justify-center p-4 sm:p-6 lg:p-8">
+        <div className="min-h-screen w-full flex justify-center p-4 sm:p-6 lg:p-8">
             <div className="w-full max-w-md">
                 <div className="backdrop-blur-lg rounded-2xl shadow-xl border border-white/20 p-6 sm:p-8 lg:p-10">
                     <h1 className='text-2xl sm:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 text-center mb-6 sm:mb-8'>

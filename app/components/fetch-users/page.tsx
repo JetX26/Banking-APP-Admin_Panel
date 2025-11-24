@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
 import { Users, Loader } from 'lucide-react'
 
+
+
 const FetchAllUsers = () => {
+
 
     const fetchAllUsers = async () => {
         const response = await axios.get('/api/getAllUsers')
@@ -18,6 +21,16 @@ const FetchAllUsers = () => {
         queryKey: ['fetchAllUsers'],
         queryFn: fetchAllUsers,
         enabled: false
+    })
+
+    const sentinelRef = useRef(null)
+
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                console.log('Element is visible')
+            }
+        })
     })
 
     return (
@@ -46,46 +59,27 @@ const FetchAllUsers = () => {
 
 
             {isSuccess && (
-                <div className='animate-in fade-in slide-in-from-left duration-700 gap-8 flex justify-between'>
-
-                    <div>
-                        <h1 className='text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent'>All Users</h1>
-                        {data && isSuccess && (<p className='text-gray-500 text-xs mt-0.5'>{data?.length} registered users </p>)}
-                    </div>
-                    <button
-                        onClick={async () => {
-                            await refetch()
-                        }}
-                        disabled={isLoading}
-                        className=''                    >
-                        {isLoading ? (
-                            <>
-                                <Loader className='w-4 h-4 animate-spin' />
-                                <span>Loading...</span>
-                            </>
-                        ) : (
-                            'Fetch'
-                        )}
-                    </button>
-                </div>
-            )}
-
-
-            {isSuccess && (
-                <div className='flex-1 min-h-0 w-full max-w-4xl bg-gradient-to-br from-white to-gray-50 rounded-xl border border-gray-100 shadow-sm overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-700' style={{ animationDelay: '100ms' }}>
+                <div className='flex-1 min-h-0 w-full max-w-4xl bg-gradient-to-br  rounded-xl border border-gray-100 shadow-sm overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-700' style={{ animationDelay: '100ms' }}>
                     {data && data.length > 0 ? (
                         <div className='w-full h-full flex flex-col overflow-hidden'>
 
-
-                            <div className='flex justify-between gap-3 px-5 py-3 bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 flex-shrink-0'>
-                                <div className='col-span-5'>
-                                    <p className='text-xs font-semibold text-gray-700 uppercase tracking-wide'>First Name</p>
+                            <div className='flex flex-col flex-shrink-0'>
+                                <div className='flex justify-between gap-3 px-5 py-3'>
+                                    <div>
+                                        <h1 className='text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent'>All Users</h1>
+                                        {data && isSuccess && (<p className='text-gray-500 text-xs mt-0.5'>{data?.length} registered users </p>)}
+                                    </div>
                                 </div>
-                                <div className='col-span-4'>
-                                    <p className='text-xs font-semibold text-gray-700 uppercase tracking-wide'>Last Name</p>
-                                </div>
-                                <div className='col-span-3'>
-                                    <p className='text-xs font-semibold text-gray-700 uppercase tracking-wide'>Accounts</p>
+                                <div className='flex justify-between gap-3 px-5 py-3 border-b border-gray-200'>
+                                    <div className='col-span-5'>
+                                        <p className='text-xs font-semibold text-gray-700 uppercase tracking-wide'>First Name</p>
+                                    </div>
+                                    <div className='col-span-4'>
+                                        <p className='text-xs font-semibold text-gray-700 uppercase tracking-wide'>Last Name</p>
+                                    </div>
+                                    <div className='col-span-3'>
+                                        <p className='text-xs font-semibold text-gray-700 uppercase tracking-wide'>Accounts</p>
+                                    </div>
                                 </div>
                             </div>
 
@@ -137,21 +131,6 @@ const FetchAllUsers = () => {
             )}
 
 
-            {error && (
-                <div className='flex-1 min-h-0 bg-white rounded-xl border border-red-100 shadow-sm overflow-hidden flex items-center justify-center animate-in fade-in duration-500'>
-                    <div className='flex flex-col items-center gap-3 text-center'>
-                        <div className='w-12 h-12 rounded-full bg-red-100 flex items-center justify-center'>
-                            <svg className='w-6 h-6 text-red-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
-                            </svg>
-                        </div>
-                        <div>
-                            <p className='text-sm font-semibold text-red-700'>Failed to load users</p>
-                            <p className='text-xs text-red-600 mt-1'>Try clicking Fetch again</p>
-                        </div>
-                    </div>
-                </div>
-            )}
 
 
         </div>

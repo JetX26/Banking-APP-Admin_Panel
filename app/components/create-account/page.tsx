@@ -79,7 +79,7 @@ const CreateAccount = () => {
             <div className="w-full max-w-md">
                 <form
                     onSubmit={submit}
-                    className="bg-gradient-to-br from-white/90 via-blue-50/80 to-purple-50/80 backdrop-blur-lg rounded-2xl shadow-xl border border-white/20 p-6 sm:p-8 lg:p-10">
+                    className="via-blue-50/80 to-purple-50/80 backdrop-blur-lg rounded-2xl shadow-xl border border-white/20 p-6 sm:p-8 lg:p-10">
 
                     <h1 className='text-2xl sm:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 text-center mb-6 sm:mb-8'>
                         Create Account

@@ -68,7 +68,7 @@ const Login = () => {
     return (
         <form onSubmit={submit} className='w-full bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 min-h-screen flex items-center justify-center px-4 py-8 sm:px-6'>
             <div className='w-full max-w-md flex flex-col justify-center items-center gap-6 sm:gap-6'>
-                <h3 className='text-2xl sm:text-3xl md:text-3xl font-semibold text-center text-gray-900'>Sign in</h3>
+                <h3 className='text-2xl sm:text-3xl md:text-3xl font-semibold text-center text-gray-900'>Admin Sign in</h3>
 
                 <input
                     onChange={(e) => {
@@ -90,12 +90,12 @@ const Login = () => {
 
                 <button
                     type='submit'
-                    className='w-full rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-3 text-base transition-colors active:scale-95'
+                    className='w-full rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-4 py-3 text-base transition-colors active:scale-95'
                 >
                     Login
                 </button>
 
-                <div className='text-center'>
+                {/* <div className='text-center'>
                     <p className='text-base text-gray-900 mb-3'>{`Don't have an account?`}</p>
                     <a
                         className='text-blue-600 hover:text-blue-700 hover:underline text-base font-medium transition-colors'
@@ -103,7 +103,7 @@ const Login = () => {
                     >
                         Create An Account
                     </a>
-                </div>
+                </div> */}
             </div>
         </form>
     );
