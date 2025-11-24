@@ -75,7 +75,7 @@ const CreateAccount = () => {
     }
 
     return (
-        <div className="min-h-screen w-full flex items-center justify-center p-4 sm:p-6 lg:p-8">
+        <div className="min-h-screen pt-8 w-full flex justify-center p-4 sm:p-6 lg:p-8">
             <div className="w-full max-w-md">
                 <form
                     onSubmit={submit}
