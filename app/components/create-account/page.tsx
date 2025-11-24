@@ -53,93 +53,81 @@ const CreateAccount = () => {
 
         console.log(e.currentTarget.value)
 
-        const verificationCode = async (length = 6) => {
-            let code = ''
-            for (let i = 0; i < length; i++) {
-                code += Math.floor(Math.random() * 10)
-            }
-            console.log(code)
-            return code;
+
+
+        const result = await mutateAsync({
+            firstName,
+            lastName,
+            email,
+            phone,
+            password,
+            accountType,
+            balance
+        })
+
+        if (result) {
+            alert('Account created successfully!')
+            router.push('/components/login')
+            console.log(result)
         }
 
-        try {
-
-            const result = await mutateAsync({
-                firstName,
-                lastName,
-                email,
-                phone,
-                password,
-                accountType,
-                balance
-            })
-
-            if (result) {
-                alert('Account created successfully!')
-                verificationCode()
-                router.push('/components/login')
-                console.log(result)
-            }
-
-        } catch (error: any) {
-            console.error(error.response?.data?.error || 'Something went wrong')
-        }
 
     }
 
     return (
-        <div className='min-h-screen flex flex-col items-center px-4 py-8 sm:px-6 md:px-8'>
-            <form
-                onSubmit={submit}
-                className="w-full max-w-md rounded-2xl p-6 sm:p-8 md:p-10 flex flex-col items-center gap-6 shadow-xl border border-gray-100">
+        <div className="min-h-screen w-full flex items-center justify-center p-4 sm:p-6 lg:p-8">
+            <div className="w-full max-w-md">
+                <form
+                    onSubmit={submit}
+                    className="bg-gradient-to-br from-white/90 via-blue-50/80 to-purple-50/80 backdrop-blur-lg rounded-2xl shadow-xl border border-white/20 p-6 sm:p-8 lg:p-10">
 
-                <div className='text-center'>
-                    <h1 className='text-2xl sm:text-3xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent'>Create Account</h1>
-
-                </div>
-
-                <div className='w-full flex flex-col items-center gap-4'>
-                    {inputs.map((item, id) => {
-                        return (
-                            <div key={id} className='w-full'>
-                                {item === 'Amount' ? (
-                                    <input
-                                        value={amount}
-                                        onChange={handleAmount}
-                                        placeholder='$0.00'
-                                        className='w-full border-2 border-gray-200 rounded-lg px-4 py-3 text-sm sm:text-base focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-gray-900 transition-all bg-gray-50 hover:bg-white'
-                                    />
-                                ) : (
-                                    <input
-                                        name={item}
-                                        type={item === 'Password' ? 'password' : 'text'}
-                                        className='w-full text-gray-900 border-2 border-gray-200 rounded-lg px-4 py-3 text-sm sm:text-base focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all bg-gray-50 hover:bg-white'
-                                        placeholder={item}
-                                    />
-                                )}
-                            </div>
-                        )
-                    })}
-
-                    <select
-                        onChange={(e) => {
-                            setAccountType(e.target.value)
-                        }}
-                        className='w-full text-gray-900 px-4 py-3 border-2 border-gray-200 rounded-lg text-sm sm:text-base focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all bg-gray-50 hover:bg-white cursor-pointer'
-                    >
-                        {accountTypes.map((item, id) => {
-                            return <option key={id}>{item}</option>
-                        })}
-                    </select>
-
-                    <button
-                        type='submit'
-                        className='w-full rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold px-4 py-3 sm:py-3 text-sm sm:text-base transition-all shadow-lg hover:shadow-xl active:scale-95 transform'
-                    >
+                    <h1 className='text-2xl sm:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 text-center mb-6 sm:mb-8'>
                         Create Account
-                    </button>
-                </div>
-            </form>
+                    </h1>
+
+                    <div className='w-full flex flex-col gap-4 sm:gap-5'>
+                        {inputs.map((item, id) => {
+                            return (
+                                <div key={id} className='w-full'>
+                                    {item === 'Amount' ? (
+                                        <input
+                                            value={amount}
+                                            onChange={handleAmount}
+                                            placeholder='$0.00'
+                                            className='w-full rounded-xl border-2 border-gray-200 bg-white/50 backdrop-blur-sm text-gray-900 px-4 py-3 sm:py-3.5 text-sm sm:text-base placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-300'
+                                        />
+                                    ) : (
+                                        <input
+                                            name={item}
+                                            type={item === 'Password' ? 'password' : 'text'}
+                                            className='w-full rounded-xl border-2 border-gray-200 bg-white/50 backdrop-blur-sm text-gray-900 px-4 py-3 sm:py-3.5 text-sm sm:text-base placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-300'
+                                            placeholder={item}
+                                        />
+                                    )}
+                                </div>
+                            )
+                        })}
+
+                        <select
+                            onChange={(e) => {
+                                setAccountType(e.target.value)
+                            }}
+                            className='w-full rounded-xl border-2 border-gray-200 bg-white/50 backdrop-blur-sm text-gray-900 px-4 py-3 sm:py-3.5 text-sm sm:text-base placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-300 cursor-pointer'
+                        >
+                            {accountTypes.map((item, id) => {
+                                return <option key={id}>{item}</option>
+                            })}
+                        </select>
+
+                        <button
+                            type='submit'
+                            className='w-full mt-2 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-6 py-3 sm:py-3.5 text-sm sm:text-base transition-all duration-200 shadow-lg hover:shadow-xl active:scale-[0.98] transform'
+                        >
+                            Create Account
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }

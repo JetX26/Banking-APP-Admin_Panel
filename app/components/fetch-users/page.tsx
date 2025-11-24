@@ -52,13 +52,27 @@ const FetchAllUsers = () => {
                         <h1 className='text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent'>All Users</h1>
                         {data && isSuccess && (<p className='text-gray-500 text-xs mt-0.5'>{data?.length} registered users </p>)}
                     </div>
-                    <button>Refetch</button>
+                    <button
+                        onClick={async () => {
+                            await refetch()
+                        }}
+                        disabled={isLoading}
+                        className=''                    >
+                        {isLoading ? (
+                            <>
+                                <Loader className='w-4 h-4 animate-spin' />
+                                <span>Loading...</span>
+                            </>
+                        ) : (
+                            'Fetch'
+                        )}
+                    </button>
                 </div>
             )}
 
 
             {isSuccess && (
-                <div className='flex-1 min-h-0 w-1/4 bg-gradient-to-br from-white to-gray-50 rounded-xl border border-gray-100 shadow-sm overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-700' style={{ animationDelay: '100ms' }}>
+                <div className='flex-1 min-h-0 w-full max-w-4xl bg-gradient-to-br from-white to-gray-50 rounded-xl border border-gray-100 shadow-sm overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-700' style={{ animationDelay: '100ms' }}>
                     {data && data.length > 0 ? (
                         <div className='w-full h-full flex flex-col overflow-hidden'>
 
@@ -124,7 +138,7 @@ const FetchAllUsers = () => {
 
 
             {error && (
-                <div className='flex-1 min-h-0 w-1/4 bg-white rounded-xl border border-red-100 shadow-sm overflow-hidden flex items-center justify-center animate-in fade-in duration-500'>
+                <div className='flex-1 min-h-0 bg-white rounded-xl border border-red-100 shadow-sm overflow-hidden flex items-center justify-center animate-in fade-in duration-500'>
                     <div className='flex flex-col items-center gap-3 text-center'>
                         <div className='w-12 h-12 rounded-full bg-red-100 flex items-center justify-center'>
                             <svg className='w-6 h-6 text-red-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>

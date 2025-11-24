@@ -44,6 +44,9 @@ export async function POST(req: NextRequest) {
             }
         })
 
+
+
+
         const customerAccType = await prisma.account.findFirst({
             where: {
                 accountType,
@@ -51,11 +54,26 @@ export async function POST(req: NextRequest) {
             }
         })
 
+        const customerEmail = await prisma.customer.findFirst({
+            where: { email }
+        })
+        if (customerEmail?.email) {
+            return NextResponse.json({ error: 'Customer with that email already exists' }, { status: 400 })
+        }
+
+        const customerPhone = await prisma.customer.findFirst({
+            where: { phone }
+        })
+        if (customerPhone?.phone) {
+            return NextResponse.json({ error: 'Customer with that phone already exists' }, { status: 400 })
+        }
+
 
 
         if (customer) {
 
-            if (customerAccType?.accountType === accountType) {
+
+            if (customerAccType?.accountType) {
                 return NextResponse.json({ error: 'Account already exists' }, { status: 400 })
             } else {
                 const createAccount = await prisma.account.create({
