@@ -117,7 +117,7 @@ const FetchTransferHistory = () => {
                         }}
                         className='w-full text-gray-900 border-2 border-gray-200 rounded-lg px-4 py-3 text-sm sm:text-base focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all bg-gray-50 hover:bg-white'
                         type="email"
-                        placeholder='Email or phone number'
+                        placeholder='Enter email'
                     />
 
                     <button
