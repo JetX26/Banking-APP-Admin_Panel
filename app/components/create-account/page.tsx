@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { CheckCircle, AlertCircle, X } from 'lucide-react';
 
 const CreateAccount = () => {
 
@@ -13,6 +14,11 @@ const CreateAccount = () => {
     const [accountType, setAccountType] = useState('')
     const [balance, setBalance] = useState<number>(0)
     const [amount, setAmount] = useState('')
+    const [popup, setPopup] = useState<{ show: boolean; type: 'success' | 'error'; message: string }>({
+        show: false,
+        type: 'success',
+        message: ''
+    })
 
     const { mutateAsync } = useMutation({
         mutationFn: async (formValues: any) => {
@@ -22,6 +28,14 @@ const CreateAccount = () => {
     })
 
     const router = useRouter()
+
+    const showPopup = (type: 'success' | 'error', message: string) => {
+        setPopup({ show: true, type, message })
+    }
+
+    const closePopup = () => {
+        setPopup({ ...popup, show: false })
+    }
 
     const handleAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
         let numeric = e.target.value.replace(/[^0-9.]/g, "");
@@ -48,34 +62,87 @@ const CreateAccount = () => {
         const password = formData.get('Password')
 
         if (!firstName || !lastName || !email || !phone || !password) {
-            alert('Please fill in all required fields...')
+            showPopup('error', 'Please fill in all required fields...')
+            return
         }
 
         console.log(e.currentTarget.value)
 
+        try {
+            const result = await mutateAsync({
+                firstName,
+                lastName,
+                email,
+                phone,
+                password,
+                accountType,
+                balance
+            })
 
-
-        const result = await mutateAsync({
-            firstName,
-            lastName,
-            email,
-            phone,
-            password,
-            accountType,
-            balance
-        })
-
-        if (result) {
-            alert('Account created successfully!')
-            router.push('/components/login')
-            console.log(result)
+            if (result) {
+                showPopup('success', 'Account created successfully!')
+                setTimeout(() => {
+                    router.push('/components/login')
+                }, 2000)
+                console.log(result)
+            }
+        } catch (error) {
+            showPopup('error', 'Failed to create account. Please try again.')
         }
-
-
     }
 
     return (
         <div className="min-h-screen pt-8 w-full flex justify-center p-4 sm:p-6 lg:p-8">
+            {/* Custom Popup */}
+            {popup.show && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
+                    <div
+                        className="absolute inset-0 bg-black/20 backdrop-blur-sm"
+                        onClick={closePopup}
+                    ></div>
+                    <div className="relative bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 max-w-md w-full animate-in zoom-in-95 slide-in-from-bottom-4 duration-300">
+                        <button
+                            onClick={closePopup}
+                            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+                        >
+                            <X size={20} />
+                        </button>
+
+                        <div className="flex flex-col items-center text-center gap-4">
+                            {popup.type === 'success' ? (
+                                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-green-100 to-emerald-100 flex items-center justify-center">
+                                    <CheckCircle className="w-8 h-8 text-green-600" strokeWidth={2} />
+                                </div>
+                            ) : (
+                                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-red-100 to-rose-100 flex items-center justify-center">
+                                    <AlertCircle className="w-8 h-8 text-red-600" strokeWidth={2} />
+                                </div>
+                            )}
+
+                            <div>
+                                <h3 className={`text-xl font-bold mb-2 ${popup.type === 'success'
+                                        ? 'text-green-600'
+                                        : 'text-red-600'
+                                    }`}>
+                                    {popup.type === 'success' ? 'Success!' : 'Error'}
+                                </h3>
+                                <p className="text-gray-600 text-sm">{popup.message}</p>
+                            </div>
+
+                            <button
+                                onClick={closePopup}
+                                className={`w-full mt-2 rounded-xl font-semibold px-6 py-3 text-sm transition-all duration-200 shadow-lg hover:shadow-xl active:scale-[0.98] transform ${popup.type === 'success'
+                                        ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white'
+                                        : 'bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white'
+                                    }`}
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className="w-full max-w-md">
                 <form
                     onSubmit={submit}

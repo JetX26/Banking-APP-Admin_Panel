@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
 import { Users, Loader } from 'lucide-react'
+import { disconnect } from 'process'
 
 
 
@@ -25,13 +26,27 @@ const FetchAllUsers = () => {
 
     const sentinelRef = useRef(null)
 
+    const [currentPage, setCurrentPage] = useState(0)
+
+    const itemsPerPage = 10;
+
+    const itemsToShow = data?.slice(0, (currentPage + 1) * itemsPerPage)
+
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
+            if (entries[0].isIntersecting && data && itemsToShow && itemsToShow.length < data.length) {
                 console.log('Element is visible')
+
+                setCurrentPage(prev => prev + 1)
             }
         })
+
+        if (sentinelRef.current) {
+            observer.observe(sentinelRef.current)
+        }
     })
+
+
 
     return (
         <div className=" flex flex-col items-center gap-4 p-5">
@@ -43,7 +58,7 @@ const FetchAllUsers = () => {
                         await refetch()
                     }}
                     disabled={isLoading}
-                    className={`rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-blue-400 disabled:to-indigo-400 text-white font-semibold transition-all shadow-md hover:shadow-lg active:scale-95 flex items-center gap-2 flex-shrink-0 duration-500 ${isSuccess ? 'absolute top-5 right-5 px-5 py-1.5 text-xs' : 'px-6 py-2 text-sm'
+                    className={`rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-blue-400 disabled:to-indigo-400 text-white font-semibold transition-all shadow-md hover:shadow-lg active:scale-95 flex items-center gap-2 flex-shrink-0 duration-500 ${isSuccess ? 'px-5 py-1.5 text-xs' : 'px-6 py-2 text-sm'}
                         }`}
                 >
                     {isLoading ? (
@@ -84,8 +99,9 @@ const FetchAllUsers = () => {
                             </div>
 
 
-                            <div className='flex-1 overflow-y-auto bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100'>
-                                {data.map((item: any, id: any) => (
+                            <div className='overflow-y-auto bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 h-[60vh]'>
+
+                                {itemsToShow.map((item: any, id: any) => (
                                     <div
                                         key={id}
                                         className='flex justify-between gap-3 px-5 py-2.5 border-b border-gray-100 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-colors items-center animate-in fade-in slide-in-from-left duration-300'
@@ -101,6 +117,7 @@ const FetchAllUsers = () => {
                                                 {item.lastName}
                                             </p>
                                         </div>
+
                                         <div className='col-span-3 flex flex-wrap gap-1.5'>
                                             {item.accounts && item.accounts.length > 0 ? (
                                                 item.accounts.map((account: any, accountId: any) => (
@@ -112,9 +129,13 @@ const FetchAllUsers = () => {
                                                 <span className='text-xs text-gray-400 italic'>—</span>
                                             )}
                                         </div>
+
                                     </div>
+
                                 ))}
+                                <div ref={sentinelRef}></div>
                             </div>
+
                         </div>
                     ) : (
                         <div className='w-full h-full flex items-center justify-center animate-in fade-in duration-500'>

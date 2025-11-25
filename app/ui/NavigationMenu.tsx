@@ -58,32 +58,46 @@ const NavigationMenu = ({ activeItem, setActiveItem }: NavigationMenuProps) => {
     return (
         <div className='flex flex-col h-screen w-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 overflow-x-hidden'>
 
-            <div className='hidden lg:flex flex-col items-center justify-center flex-1 py-6 xl:py-10 px-2 xl:px-4'>
+            <div className="hidden place-self-end m-4 lg:block top-2 right-2 sm:top-4 sm:right-4 z-20">
+                <button
+                    onClick={() => { logoutButton() }}
+                    className="px-3 md:px-4 lg:px-5 xl:px-6 py-2 md:py-2.5 lg:py-3 
+                   bg-gradient-to-r from-blue-600 to-purple-600 
+                   hover:from-blue-700 hover:to-purple-700 
+                   text-white rounded-lg font-semibold 
+                   transition-all shadow-lg hover:shadow-xl 
+                   active:scale-95 text-xs md:text-sm lg:text-base"
+                >
+                    Logout
+                </button>
+            </div>
 
-                <div className='px-4 xl:px-6 py-3 xl:py-4 mb-6 xl:mb-10 text-center'>
-                    <h2 className='text-3xl xl:text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent'>Admin Dashboard</h2>
+            <div className='hidden lg:flex flex-col items-center justify-center flex-1 py-4 md:py-6 lg:py-8 xl:py-10 px-2 md:px-3 lg:px-4'>
+
+                <div className='px-3 md:px-4 lg:px-6 py-2 md:py-3 lg:py-4 mb-4 md:mb-6 lg:mb-8 xl:mb-10 text-center'>
+                    <h2 className='text-2xl md:text-3xl lg:text-3xl xl:text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent'>Admin Dashboard</h2>
                 </div>
 
-                <nav className='flex flex-wrap gap-4 xl:gap-6 px-2 xl:px-4 max-w-full justify-center'>
+                <nav className='flex flex-wrap gap-3 md:gap-4 lg:gap-5 xl:gap-6 px-2 md:px-3 lg:px-4 max-w-full justify-center'>
                     {menuIcons.map((item, id) => {
                         const IconComponent = item.icon;
                         return (
                             <button
                                 onClick={() => setActiveItem(item.name)}
                                 key={id}
-                                className={`flex flex-col items-center justify-center gap-2 xl:gap-3 p-4 xl:p-6 rounded-2xl shadow-md transition-all duration-200 border w-[140px] h-[140px] xl:w-[160px] xl:h-[160px] ${activeItem === item.name
+                                className={`flex flex-col items-center justify-center gap-2 md:gap-2.5 lg:gap-3 p-3 md:p-4 lg:p-5 xl:p-6 rounded-xl md:rounded-2xl shadow-md transition-all duration-200 border w-[120px] h-[120px] md:w-[135px] md:h-[135px] lg:w-[150px] lg:h-[150px] xl:w-[160px] xl:h-[160px] ${activeItem === item.name
                                     ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-xl scale-105 border-transparent'
                                     : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-100 hover:shadow-lg hover:scale-102'
                                     }`}
                             >
-                                <IconComponent size={30} strokeWidth={1.5} className='xl:w-[35px] xl:h-[35px]' />
-                                <span className='text-sm xl:text-base font-semibold text-center line-clamp-2'>{item.name}</span>
+                                <IconComponent size={26} strokeWidth={1.5} className='md:w-[28px] md:h-[28px] lg:w-[32px] lg:h-[32px] xl:w-[35px] xl:h-[35px]' />
+                                <span className='text-xs md:text-sm lg:text-sm xl:text-base font-semibold text-center line-clamp-2 leading-tight px-1'>{item.name}</span>
                             </button>
                         )
                     })}
                 </nav>
 
-                <div className='w-full lg:flex flex-1 overflow-y-auto p-4 xl:p-8 mt-4 xl:mt-8'>
+                <div className='w-full lg:flex flex-1 overflow-y-auto p-3 md:p-4 lg:p-6 xl:p-8 mt-3 md:mt-4 lg:mt-6 xl:mt-8'>
                     {components.map((item, id) => {
                         if (item.name === activeItem) {
                             const Component = item.component;
@@ -101,7 +115,7 @@ const NavigationMenu = ({ activeItem, setActiveItem }: NavigationMenuProps) => {
             <div className='lg:hidden flex flex-col w-full h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100'>
 
                 {!showNavByDefault && (
-                    <div className='flex items-center justify-between border-b border-gray-200 px-3 sm:px-4 py-3 sm:py-4 bg-white shadow-sm sticky top-0 z-50 animate-in slide-in-from-top duration-300 gap-2 sm:gap-3'>
+                    <div className='flex items-center justify-between border-b border-gray-200 px-3 sm:px-4 py-3 sm:py-4 bg-white shadow-sm top-0 z-50 animate-in slide-in-from-top duration-300 gap-2 sm:gap-3'>
                         <button
                             onClick={() => {
                                 setShowNavByDefault(true)
@@ -142,7 +156,7 @@ const NavigationMenu = ({ activeItem, setActiveItem }: NavigationMenuProps) => {
                             <h2 className='text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent text-center'>Admin Dashboard</h2>
                         </div>
 
-                        <nav className='flex flex-wrap gap-2 sm:gap-3 md:gap-4 px-2 sm:px-3 md:px-4 flex-1 overflow-y-auto pb-4 justify-center'>
+                        <nav className='flex flex-wrap gap-2 sm:gap-3 md:gap-4 px-2 sm:px-3 md:px-4 flex-1 overflow-y-auto pb-4 justify-center content-start'>
                             {menuIcons.map((item, id) => {
                                 const IconComponent = item.icon;
                                 return (
@@ -152,11 +166,11 @@ const NavigationMenu = ({ activeItem, setActiveItem }: NavigationMenuProps) => {
                                             setShowNavByDefault(false)
                                         }}
                                         key={id}
-                                        className='flex flex-col items-center justify-center p-3 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 text-gray-700 hover:from-blue-50 hover:to-indigo-50 hover:text-blue-600 border border-gray-200 transition-all active:scale-95 animate-in slide-in-from-bottom duration-300 hover:shadow-md w-[90px] h-[100px] sm:w-[100px] sm:h-[120px] md:w-[120px] md:h-[140px]'
+                                        className='flex flex-col items-center justify-center p-3 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 text-gray-700 hover:from-blue-50 hover:to-indigo-50 hover:text-blue-600 border border-gray-200 transition-all active:scale-95 animate-in slide-in-from-bottom duration-300 hover:shadow-md w-[90px] h-[100px] sm:w-[110px] sm:h-[120px] md:w-[130px] md:h-[140px]'
                                         style={{ animationDelay: `${id * 50}ms` }}
                                     >
-                                        <IconComponent size={24} strokeWidth={1.5} className='sm:w-[28px] sm:h-[28px] md:w-[35px] md:h-[35px]' />
-                                        <span className='text-xs sm:text-sm md:text-base font-semibold text-center mt-2 leading-tight line-clamp-2'>{item.name}</span>
+                                        <IconComponent size={28} strokeWidth={1.5} className='sm:w-[32px] sm:h-[32px] md:w-[36px] md:h-[36px]' />
+                                        <span className='text-xs sm:text-sm md:text-base font-semibold text-center mt-2 leading-tight line-clamp-2 px-1'>{item.name}</span>
                                     </button>
                                 )
                             })}
@@ -165,7 +179,7 @@ const NavigationMenu = ({ activeItem, setActiveItem }: NavigationMenuProps) => {
                         <div className='px-3 sm:px-4 py-4 flex justify-end sm:py-6 border-t border-gray-100'>
                             <button
                                 onClick={() => { logoutButton() }}
-                                className='w-1/3 px-4 py-3 bg-gradient-to-r pr-4 from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-lg font-semibold transition-all shadow-md hover:shadow-lg active:scale-95 text-sm sm:text-base'
+                                className='w-full sm:w-auto min-w-[120px] px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-lg font-semibold transition-all shadow-md hover:shadow-lg active:scale-95 text-sm sm:text-base'
                             >
                                 Logout
                             </button>
@@ -174,14 +188,8 @@ const NavigationMenu = ({ activeItem, setActiveItem }: NavigationMenuProps) => {
                 )}
             </div>
 
-            <div className='absolute right-2 sm:right-4 top-2 sm:top-4 hidden lg:block'>
-                <button
-                    onClick={() => { logoutButton() }}
-                    className='px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl active:scale-95 text-sm sm:text-base'
-                >
-                    Logout
-                </button>
-            </div>
+
+
 
         </div>
     )
