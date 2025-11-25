@@ -155,7 +155,7 @@ const FetchUser = () => {
                                     return (
                                         <div key={key} className='space-y-3'>
                                             <h3 className='text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-3'>Accounts</h3>
-                                            {value.map((account: any, index: number) => (
+                                            {value.map((account, index: number) => (
                                                 <div key={index} className='bg-gradient-to-br from-gray-50 to-blue-50/30 p-4 sm:p-5 rounded-xl border border-gray-200 hover:shadow-md hover:border-blue-300 transition-all duration-200 space-y-2'>
                                                     <div className='grid grid-cols-1 gap-2'>
                                                         <div>
