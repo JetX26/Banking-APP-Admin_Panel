@@ -4,7 +4,6 @@ import React, { useRef, useEffect, useState } from 'react'
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
 import { Users, Loader } from 'lucide-react'
-import { disconnect } from 'process'
 
 
 
@@ -18,7 +17,7 @@ const FetchAllUsers = () => {
         return response.data.data;
     }
 
-    const { data, isLoading, error, refetch, isSuccess } = useQuery({
+    const { data, isLoading, refetch, isSuccess } = useQuery({
         queryKey: ['fetchAllUsers'],
         queryFn: fetchAllUsers,
         enabled: false
@@ -129,11 +128,10 @@ const FetchAllUsers = () => {
                                                 <span className='text-xs text-gray-400 italic'>—</span>
                                             )}
                                         </div>
-
+                                        <div ref={sentinelRef}></div>
                                     </div>
-
                                 ))}
-                                <div ref={sentinelRef}></div>
+
                             </div>
 
                         </div>
