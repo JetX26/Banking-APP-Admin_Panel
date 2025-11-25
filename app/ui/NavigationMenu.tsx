@@ -27,7 +27,7 @@ const components = [
     { name: 'Fetch User', component: FetchUser },
     { name: 'Transfer Funds', component: TransferFunds },
     { name: 'Create Account', component: CreateAccount },
-    { name: 'Search Page', component: SearchPage }
+    { name: 'Search User', component: SearchPage }
 ]
 
 export const menuIcons = [
@@ -37,7 +37,7 @@ export const menuIcons = [
     { name: 'Fetch User', icon: User },
     { name: 'Transfer Funds', icon: Send },
     { name: 'Create Account', icon: PlusCircle },
-    { name: 'Search Page', icon: SearchIcon }
+    { name: 'Search User', icon: SearchIcon }
 ]
 
 const NavigationMenu = ({ activeItem, setActiveItem }: NavigationMenuProps) => {
