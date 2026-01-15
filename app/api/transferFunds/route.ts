@@ -120,17 +120,9 @@ export async function POST(req: NextRequest) {
         }
 
         const receiverAccount = receiver.accounts[0];
-<<<<<<< HEAD
         if (senderAccount.balance < amount) {
             return NextResponse.json({ error: 'Insufficient Funds' }, { status: 400 })
         }
-=======
-
-        if (senderAccount.balance < amount) {
-            return NextResponse.json({ error: 'Insufficient Funds' }, { status: 400 })
-        }
-
->>>>>>> 5aba93b60ab712dd3b55a00aa42fd4d4b30df78b
         const senderBalance = await prisma.account.update({
             where: { accountNumber: senderAccount.accountNumber },
             data: { balance: senderAccount.balance - amount }
