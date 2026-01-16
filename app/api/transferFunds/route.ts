@@ -123,35 +123,54 @@ export async function POST(req: NextRequest) {
         if (senderAccount.balance < amount) {
             return NextResponse.json({ error: 'Insufficient Funds' }, { status: 400 })
         }
-        const senderBalance = await prisma.account.update({
-            where: { accountNumber: senderAccount.accountNumber },
-            data: { balance: senderAccount.balance - amount }
-        })
+        // const senderBalance = await prisma.account.update({
+        //     where: { accountNumber: senderAccount.accountNumber },
+        //     data: { balance: senderAccount.balance - amount }
+        // })
 
 
-        const receiverBalance = await prisma.account.update({
-            where: { accountNumber: receiverAccount.accountNumber },
-            data: { balance: receiverAccount.balance + amount }
-        })
-        if (!receiverBalance) {
-            await prisma.account.update({
+        // const receiverBalance = await prisma.account.update({
+        //     where: { accountNumber: receiverAccount.accountNumber },
+        //     data: { balance: receiverAccount.balance + amount }
+        // })
+        // if (!receiverBalance) {
+        //     await prisma.account.update({
+        //         where: { accountNumber: senderAccount.accountNumber },
+        //         data: { balance: senderAccount.balance + amount }
+        //     })
+
+        //     return NextResponse.json({ error: 'Money did not go through' }, { status: 400 })
+        // }
+
+        // const transfer = await prisma.transfer.create({
+        //     data: {
+        //         fromAccountId: senderAccount.id,
+        //         toAccountId: receiverAccount.id,
+        //         amount,
+        //         createdAt: new Date()
+        //     }
+        // })
+
+        const result = await prisma.$transaction([
+            prisma.account.update({
                 where: { accountNumber: senderAccount.accountNumber },
-                data: { balance: senderAccount.balance + amount }
+                data: { balance: senderAccount.balance - amount }
+            }),
+            prisma.account.update({
+                where: { accountNumber: receiverAccount.accountNumber },
+                data: { balance: receiverAccount.balance + amount }
+            }),
+            prisma.transfer.create({
+                data: {
+                    fromAccountId: senderAccount.id,
+                    toAccountId: receiverAccount.id,
+                    amount,
+                    createdAt: new Date()
+                }
             })
+        ])
 
-            return NextResponse.json({ error: 'Money did not go through' }, { status: 400 })
-        }
-
-        const transfer = await prisma.transfer.create({
-            data: {
-                fromAccountId: senderAccount.id,
-                toAccountId: receiverAccount.id,
-                amount,
-                createdAt: new Date()
-            }
-        })
-
-        return NextResponse.json({ success: true, message: 'Transfer Sent', senderBalance, receiverBalance, transfer }, { status: 200 })
+        return NextResponse.json({ success: true, message: 'Transfer Sent', result }, { status: 200 })
 
 
     } catch (error) {
